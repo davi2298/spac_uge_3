@@ -63,6 +63,40 @@ public class Cerial
     {
         return mfrMap[mfr];
     }
+    
+    // override object.Equals
+    public override bool Equals(object obj)
+    {
+        //
+        // See the full list of guidelines at
+        //   http://go.microsoft.com/fwlink/?LinkID=85237
+        // and also the guidance for operator== at
+        //   http://go.microsoft.com/fwlink/?LinkId=85238
+        //
 
+        if (obj == null || GetType() != obj.GetType())
+        {
+            return false;
+        }
+        Cerial other = (Cerial)obj;
+        // TODO: write your implementation of Equals() here
+        var equals = this.Name == other.Name
+            && this.mfr == other.mfr
+            && this.Type == other.Type
+            && this.Calories == other.Calories
+            && this.Protein == other.Protein
+            && this.Fat == other.Fat
+            && this.Sodium == other.Sodium
+            && this.Fiber == other.Fiber
+            && this.Carbo == other.Carbo
+            && this.Sugars == other.Sugars
+            && this.Potass == other.Potass
+            && this.Vitamins == other.Vitamins
+            && this.Shelf == other.Shelf
+            && this.Weight == other.Weight
+            && this.Cups == other.Cups
+            && this.Rating == other.Rating;
+        return equals;
+    }
 
 }
