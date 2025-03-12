@@ -3,14 +3,14 @@ using Google.Protobuf.WellKnownTypes;
 
 public class CerialDriver
 {
+    private static readonly string SLNPATH = DotEnv.TryGetSolutionDirectoryInfo().FullName;
     private static void Main(string[] args)
     {
-        var tmp = DotEnv.TryGetSolutionDirectoryInfo();
-        DotEnv.Load(Path.Combine(DotEnv.TryGetSolutionDirectoryInfo().FullName, ".env"));
-
-        if (CerialContext.GetInstanse.Cerial.Count() == 0)
+        DotEnv.Load(Path.Combine(SLNPATH, ".env"));
+        CerialContext.IsTesting = bool.Parse(Environment.GetEnvironmentVariable("TESTING") ?? "false");
+        if (!CerialContext.GetInstanse.Cerial.Any())
         {
-            Parser.GetInstanse.LoadFromCSV(Path.Combine(DotEnv.TryGetSolutionDirectoryInfo().FullName, "Data\\Cereal.csv"));
+            Parser.GetInstanse.LoadFromCSV(Path.Combine(SLNPATH, "Data\\Cereal.csv"));
         }
         // return;
         var builder = WebApplication.CreateBuilder(args);

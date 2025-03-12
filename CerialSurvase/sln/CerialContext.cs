@@ -6,21 +6,19 @@ class CerialContext : DbContext
     
     private CerialContext(){}
     public DbSet<Cerial> Cerial { get; set; }
+    public static bool IsTesting { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseMySQL($"server=localhost;database={Environment.GetEnvironmentVariable("DBNAME")};user={Environment.GetEnvironmentVariable("DBUSER")};password={Environment.GetEnvironmentVariable("DBPASSWORD")}");
+        if (!IsTesting)
+            optionsBuilder.UseMySQL($"server=localhost;database={Environment.GetEnvironmentVariable("DBNAME")};user={Environment.GetEnvironmentVariable("DBUSER")};password={Environment.GetEnvironmentVariable("DBPASSWORD")}");
+        else
+            optionsBuilder.UseInMemoryDatabase("Testing");
     }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        // modelBuilder.Entity<Cerial>(entity =>
-        // {
-        //     entity.Property(e => e.Name).IsRequired();
-        //     entity.Property(e => e.mfr).IsRequired();
-        //     entity.Property(e => e.Type).IsRequired();
-        // });
-;
     }
 }

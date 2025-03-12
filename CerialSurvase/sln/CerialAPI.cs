@@ -16,11 +16,10 @@ class CerialAPI
         var cerialname = Convert.ToString(context.Request.RouteValues["cerialname"]);
         if (cerialname != null)
         {
-            var cerial = await Task.Run(() =>
-                cerialContext.Cerial
+            var cerial = cerialContext.Cerial
                 .Where(c => c.Name == cerialname)
                 .FirstOrDefault()
-                ?? throw new ArgumentException("Cerial name not found"));
+                ?? throw new ArgumentException("Cerial name not found");
             await context.Response.WriteAsJsonAsync(cerial);
 
         }
