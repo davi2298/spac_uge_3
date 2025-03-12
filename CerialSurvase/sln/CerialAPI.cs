@@ -1,4 +1,5 @@
 
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 
 class CerialAPI
@@ -33,11 +34,27 @@ class CerialAPI
         {
             await context.Response.WriteAsJsonAsync(cerials);
         }
-
     }
 
-    internal static void UpdateCerial(HttpContext context)
+    internal static async Task UpdateCerial(HttpContext context)
     {
-        throw new NotImplementedException();
+        var routeValue = context.Request.RouteValues["id"] ?? throw new ArgumentException("no given id");
+        int cerialID = int.Parse(routeValue.ToString());
+
+        Cerial toUpdateCerial = cerialContext.Cerial.Find(cerialID) ?? throw new ArgumentException("Cerial does not exist");
+        Cerial updateWith = await context.Request.ReadFromJsonAsync<Cerial>() ?? throw new ArgumentException("No Cerial to update with");
+
+        toUpdateCerial.Update(updateWith);
+        cerialContext.SaveChanges();
+
+        context.Response.StatusCode = (int)HttpStatusCode.Accepted;
+
     }
+    internal static async Task FilterdGet(HttpContext context)
+    {
+        var calories = context.Request.Query["calories"];
+        
+        
+    }
+
 }

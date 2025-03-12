@@ -10,24 +10,24 @@ public class Cerial
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int ID { get; init; }
     [NotNull, Column("cerial_name")]
-    public string Name { get; init; }
+    public string Name { get; private set; }
     [NotNull]
-    public string mfr { get; init; }
+    public string mfr { get; private set; }
     [NotNull, Column("cerial_type")]
-    public string Type { get; init; }
-    public int Calories { get; init; }
-    public int Protein { get; init; }
-    public int Fat { get; init; }
-    public int Sodium { get; init; }
-    public float Fiber { get; init; }
-    public float Carbo { get; init; }
-    public int Sugars { get; init; }
-    public int Potass { get; init; }
-    public int Vitamins { get; init; }
-    public int Shelf { get; init; }
-    public float Weight { get; init; }
-    public float Cups { get; init; }
-    public float Rating { get; init; }
+    public string Type { get; private set; }
+    public int Calories { get; private set; }
+    public int Protein { get; private set; }
+    public int Fat { get; private set; }
+    public int Sodium { get; private set; }
+    public float Fiber { get; private set; }
+    public float Carbo { get; private set; }
+    public int Sugars { get; private set; }
+    public int Potass { get; private set; }
+    public int Vitamins { get; private set; }
+    public int Shelf { get; private set; }
+    public float Weight { get; private set; }
+    public float Cups { get; private set; }
+    public float Rating { get; private set; }
 
     private static Dictionary<string, string> mfrMap = new(){
     {"A", "American Home Food Product"},
@@ -63,7 +63,28 @@ public class Cerial
     {
         return mfrMap[mfr];
     }
-    
+
+    public Cerial Update(Cerial updatedCerial)
+    {
+        this.Name = updatedCerial.Name;
+        this.mfr = updatedCerial.mfr;
+        this.Type = updatedCerial.Type;
+        this.Calories = updatedCerial.Calories;
+        this.Protein = updatedCerial.Protein;
+        this.Fat = updatedCerial.Fat;
+        this.Sodium = updatedCerial.Sodium;
+        this.Fiber = updatedCerial.Fiber;
+        this.Carbo = updatedCerial.Carbo;
+        this.Sugars = updatedCerial.Sugars;
+        this.Potass = updatedCerial.Potass;
+        this.Vitamins = updatedCerial.Vitamins;
+        this.Shelf = updatedCerial.Shelf;
+        this.Weight = updatedCerial.Weight;
+        this.Cups = updatedCerial.Cups;
+        this.Rating = updatedCerial.Rating;
+        return this;
+    }
+
     // override object.Equals
     public override bool Equals(object obj)
     {
@@ -80,22 +101,8 @@ public class Cerial
         }
         Cerial other = (Cerial)obj;
         // TODO: write your implementation of Equals() here
-        var equals = this.Name == other.Name
-            && this.mfr == other.mfr
-            && this.Type == other.Type
-            && this.Calories == other.Calories
-            && this.Protein == other.Protein
-            && this.Fat == other.Fat
-            && this.Sodium == other.Sodium
-            && this.Fiber == other.Fiber
-            && this.Carbo == other.Carbo
-            && this.Sugars == other.Sugars
-            && this.Potass == other.Potass
-            && this.Vitamins == other.Vitamins
-            && this.Shelf == other.Shelf
-            && this.Weight == other.Weight
-            && this.Cups == other.Cups
-            && this.Rating == other.Rating;
+        var equals = this.ID == other.ID &&
+            this.Name == other.Name;
         return equals;
     }
 

@@ -50,7 +50,7 @@ public class CerialDriver
             {
                 await Task.Run(() => CerialAPI.GetCerial(context));
             });
-            endpoints.MapPut("", async (context) =>
+            endpoints.MapPut("/updateCerial/{id}", async (context) =>
             {
                 await Task.Run(() => CerialAPI.UpdateCerial(context));
             });
