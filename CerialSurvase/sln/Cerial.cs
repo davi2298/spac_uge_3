@@ -3,16 +3,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 
+
 public class Cerial
 {
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int ID { get; init; }
-    [NotNull,Column("cerial_name")]
+    [NotNull, Column("cerial_name")]
     public string Name { get; init; }
     [NotNull]
     public string mfr { get; init; }
-    [NotNull,Column("cerial_type")]
+    [NotNull, Column("cerial_type")]
     public string Type { get; init; }
     public int Calories { get; init; }
     public int Protein { get; init; }
@@ -27,6 +28,16 @@ public class Cerial
     public float Weight { get; init; }
     public float Cups { get; init; }
     public float Rating { get; init; }
+
+    private static Dictionary<string, string> mfrMap = new(){
+    {"A", "American Home Food Product"},
+    {"G", "General Mills"},
+    {"K","Kelloggs"},
+    {"N","Nabisco"},
+    {"P","Post"},
+    {"Q","Quater Oats"},
+    {"R","Ralston Puria"},
+};
 
     public Cerial(string name, string mfr, string type, int calories, int protein, int fat, int sodium, float fiber, float carbo, int sugars, int potass, int vitamins, int shelf, float weight, float cups, float rating)
     {
@@ -47,7 +58,11 @@ public class Cerial
         Cups = cups;
         Rating = rating;
     }
-    
-    
-    
+
+    public string GetMfr()
+    {
+        return mfrMap[mfr];
+    }
+
+
 }

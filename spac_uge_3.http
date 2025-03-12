@@ -1,6 +1,0 @@
-@spac_uge_3_HostAddress = http://localhost:5124
-
-GET {{spac_uge_3_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
