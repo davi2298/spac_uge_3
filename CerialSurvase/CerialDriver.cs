@@ -8,6 +8,7 @@ public class CerialDriver
     {
         DotEnv.Load(Path.Combine(SLNPATH, ".env"));
         CerialContext.IsTesting = bool.Parse(Environment.GetEnvironmentVariable("TESTING") ?? "false");
+        var tmp = Environment.GetEnvironmentVariables();
         if (!CerialContext.GetInstanse.Cerial.Any())
         {
             Parser.GetInstanse.LoadFromCSV(Path.Combine(SLNPATH, "Data\\Cereal.csv"));
@@ -42,19 +43,21 @@ public class CerialDriver
             endpoints.MapGet(
                 "/", () => "hello world"
             );
-            endpoints.MapGet("/getCerial", async (context) =>
-            {
-                await Task.Run(() => CerialAPI.GetAllCerial(context));
-            });
-            endpoints.MapGet("/getCerial/{cerialname}", async (context) =>
-            {
-                await Task.Run(() => CerialAPI.GetCerial(context));
-            });
-            endpoints.MapPut("/updateCerial/{id}", async (context) =>
-            {
-                await Task.Run(() => CerialAPI.UpdateCerial(context));
-            });
-            // endpoints.MapPost("", async (context) =>)
+            HttpGetters(endpoints);
+
+            endpoints.MapPut("/updateCerial/{id}", CerialAPI.UpdateCerial);
+
+            endpoints.MapDelete("/deleteCerial/{id}", CerialAPI.Delete);
+
+            endpoints.MapPost("/newcerial", CerialAPI.NewCerialAsync);
         });
+    }
+
+    private static void HttpGetters(IEndpointRouteBuilder endpoints)
+    {
+        endpoints.MapGet("/getCerial", CerialAPI.GetAllCerial);
+        endpoints.MapGet("/getCerial/{cerialname}", CerialAPI.GetCerial);
+        endpoints.MapGet("/getCerial/filter", CerialAPI.FilterdGet);
+        endpoints.MapGet("/getCerialImg/{cerialname}", async context => CerialAPI.GetImageForCerial(context, Path.Combine(SLNPATH, "Data")));
     }
 }

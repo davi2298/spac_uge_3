@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-class CerialContext : DbContext
+public class CerialContext : DbContext
 {
     private static CerialContext? instanse;
     public static CerialContext GetInstanse => instanse ??= new();
@@ -20,4 +20,9 @@ class CerialContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
     }
+
+    public static void Reset(){
+        if (IsTesting) instanse = null;
+    }
+
 }

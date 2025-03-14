@@ -1,14 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
-
 
 public class Cerial
 {
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int ID { get; init; }
+    public int? ID { get; init; }
     [NotNull, Column("cerial_name")]
     public string Name { get; private set; }
     [NotNull]
